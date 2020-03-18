@@ -1,3 +1,44 @@
-{% extends 'base.html' %} {% block page_title %}{{ user }}'s Profile{% endblock %} {% block page_heading %}{{ user }}'s Profile{% endblock %} {% block content %}
+{% extends 'base.html' %}
+{% block page_title %}
+{{ user }}'s Profile
+{% endblock %}
+{% block page_heading %}
+{{ user }}'s Profile
+{% endblock %}
+{% block content %}
+
+<p>{{ user }}</p>
+<p>{{ user.uprofile.bio }}</p>
 <p>{{ profile.email }}</p>
+
+<p>Follows:</p>
+{% for follows in user.follows.all %}
+
+<p>{{ follows.followed.username }}  {{ follows.followed.uprofile.bio }}- {{ follows.followed.id }}</p>
+{% for p in follows.follows.posts.all %}
+    <p>{{ p }}</p>
+    {% endfor %}
+{% endfor %}
+
+<p>Followed By:</p>
+{% for follows in user.followedBy.all %}
+<p>{{ follows.follower }} {{ follows.follower.uprofile }} - {{ follows.follower.id }}</p>
+  
+
+
+{% endfor %}
+
+<p>Posts Liked:</p>
+{% for liked_post in user.likes.all %}
+
+<p><a href="{% url 'post_detail' liked_post.id %}">{{ liked_post }}</a></p>
+
+{% endfor %}
+
+
+<h1>
+
+
+
+</h1>
 {% endblock %}
